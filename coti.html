@@ -93,10 +93,10 @@ body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)
 
 <div class="app" id="app">
 <div class="topbar">
-  <div class="logo-circle" id="logo-init">JE</div>
+  <div class="logo-circle" id="logo-init">CDH</div>
   <div class="company-info">
-    <h1 id="comp-name">Jean Emporium S.A.S.</h1>
-    <p id="comp-sub">Insumos para jean · NIT: 900.123.456-7 · Tel: (605) 123-4567 · Barranquilla, Colombia</p>
+    <h1 id="comp-name">CDH Colombiana De Herrajes S.A.S.</h1>
+    <p id="comp-sub">Insumos para jean · NIT: 901.663.615-2 · Tel: 3001096201 · Barranquilla, Colombia</p>
   </div>
   <div class="nav">
     <button class="nav-btn active" onclick="showSection('cotizacion')">Cotización</button>
@@ -126,7 +126,7 @@ body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)
       <div class="field"><label>NIT / Cédula</label><input id="cli-nit" placeholder="900.000.000-0"></div>
     </div>
     <div class="grid3">
-      <div class="field" style="grid-column:span 2"><label>Dirección</label><input id="cli-dir" placeholder="Calle 45 # 20-30, Itagüí"></div>
+      <div class="field" style="grid-column:span 2"><label>Dirección</label><input id="cli-dir" placeholder="Calle 45 # 20-30, barranquilla"></div>
       <div class="field"><label>Ciudad</label><input id="cli-ciudad" placeholder="Medellín"></div>
     </div>
     <div class="grid2" style="margin-top:10px">
@@ -212,18 +212,18 @@ body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)
   <div class="card">
     <div class="card-title">Datos de mi empresa</div>
     <div class="grid2" style="margin-bottom:12px">
-      <div class="field" style="grid-column:span 2"><label>Nombre / Razón social</label><input id="cfg-nombre" placeholder="Jean Emporium S.A.S."></div>
+      <div class="field" style="grid-column:span 2"><label>Nombre / Razón social</label><input id="cfg-nombre" placeholder="CDH Colombiana De Herrajes S.A.S."></div>
     </div>
     <div class="grid3" style="margin-bottom:12px">
-      <div class="field"><label>NIT</label><input id="cfg-nit" placeholder="900.123.456-7"></div>
-      <div class="field"><label>Teléfono</label><input id="cfg-tel" placeholder="(605) 123-4567"></div>
+      <div class="field"><label>NIT</label><input id="cfg-nit" placeholder="901.663.615.2"></div>
+      <div class="field"><label>Teléfono</label><input id="cfg-tel" placeholder="300 1096201"></div>
       <div class="field"><label>Ciudad</label><input id="cfg-ciudad" placeholder="Barranquilla"></div>
     </div>
     <div class="grid2" style="margin-bottom:12px">
-      <div class="field"><label>Dirección</label><input id="cfg-dir" placeholder="Cra 45 # 60-20, Barranquilla"></div>
-      <div class="field"><label>Correo electrónico</label><input id="cfg-email" placeholder="ventas@jeanemporium.com"></div>
+      <div class="field"><label>Dirección</label><input id="cfg-dir" placeholder="Cra 40 # 32 - 15, Barranquilla"></div>
+      <div class="field"><label>Correo electrónico</label><input id="cfg-email" placeholder="cdhcolombianadeherrajessas@gmail.com"></div>
     </div>
-    <div class="field" style="margin-bottom:12px"><label>Página web / Redes sociales</label><input id="cfg-web" placeholder="www.jeanemporium.com | @jeanemporium"></div>
+    <div class="field" style="margin-bottom:12px"><label>Página web / Redes sociales</label><input id="cfg-web" placeholder="www.instagram.com/colombianadeherrajes | @colombianadeherrajes"></div>
     <div class="field"><label>Lema / Slogan (opcional)</label><input id="cfg-slogan" placeholder="Calidad en cada hilo"></div>
     <div class="action-bar"><button class="btn-primary" onclick="saveConfig()">Guardar datos</button></div>
   </div>
@@ -275,18 +275,13 @@ body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)
 
 <script>
 let inventory = [
-  {cod:'TEL-001',desc:'Tela índigo 10oz 58" color azul oscuro',cat:'tela',precio:28000,unidad:'metro',stock:500},
-  {cod:'TEL-002',desc:'Tela índigo 12oz 60" color negro carbón',cat:'tela',precio:32000,unidad:'metro',stock:300},
-  {cod:'CRE-001',desc:'Cremallera YKK 14cm color dorado',cat:'cremallera',precio:1800,unidad:'unidad',stock:2000},
-  {cod:'CRE-002',desc:'Cremallera invisible 20cm color negro',cat:'cremallera',precio:1500,unidad:'unidad',stock:1500},
-  {cod:'BOT-001',desc:'Botón metálico 17mm color bronce',cat:'boton',precio:350,unidad:'unidad',stock:5000},
-  {cod:'BOT-002',desc:'Botón resina 15mm color nácar',cat:'boton',precio:280,unidad:'unidad',stock:4000},
+  {cod:'APOLO',desc:'Tela índigo APOLO 12.5 oz 58" color azul oscuro',cat:'tela',precio:16000,unidad:'metro',stock:500},
 ];
 
 let company = {
-  nombre:'Jean Emporium S.A.S.',nit:'900.123.456-7',tel:'(605) 123-4567',
-  ciudad:'Barranquilla',dir:'Cra 45 # 60-20, Barranquilla, Colombia',
-  email:'ventas@jeanemporium.com',web:'www.jeanemporium.com',slogan:'',
+  nombre:'CDH Colombiana De Herrajes S.A.S.',nit:'901.663.615-2',tel:'300 1096201',
+  ciudad:'Barranquilla',dir:'Cra 40 #32-15, Barranquilla, Colombia',
+  email:'cdhcolombianadeherrajessas@gmail.com',web:'instagram.com/colombianadeherrajes',slogan:'',
   prefix:'COT-',nextnum:1,iva:false
 };
 
