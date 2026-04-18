@@ -1,0 +1,579 @@
+
+<style>
+:root {
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-background-primary: #FFFFFF;
+  --color-background-secondary: #F8F9FA;
+  --color-background-tertiary: #E9ECEF;
+  --color-text-primary: #212529;
+  --color-text-secondary: #6C757D;
+  --color-border-secondary: #DEE2E6;
+  --color-border-tertiary: #ADB5BD;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)}
+.app{min-height:600px;background:var(--color-background-tertiary)}
+.topbar{background: linear-gradient(135deg, #007BFF 0%, #0056B3 100%);border-bottom:1px solid #0056B3;padding:12px 20px;display:flex;align-items:center;gap:16px;color:#fff}
+.logo-circle{width:40px;height:40px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#007BFF;font-weight:600;font-size:13px;flex-shrink:0}
+.company-info h1{font-size:16px;font-weight:600;color:#FFFFFF}
+.company-info p{font-size:11px;color:#E3F2FD}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav-btn{padding:7px 14px;border:1px solid rgba(255,255,255,0.3);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:13px;color:#FFFFFF;font-family:var(--font-sans);transition: all 0.2s}
+.nav-btn.active{background:#FFFFFF;border-color:#FFFFFF;color:#007BFF;font-weight:600}
+.nav-btn:hover{background:rgba(255,255,255,0.1);border-color:#FFFFFF}
+.content{padding:20px;max-width:900px;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+.card{background:var(--color-background-primary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 20px;margin-bottom:16px;box-shadow: 0 2px 8px rgba(0,0,0,0.1);transition: box-shadow 0.2s}
+.card:hover{box-shadow: 0 4px 12px rgba(0,0,0,0.15)}
+.card-title{font-size:13px;font-weight:600;color:var(--color-text-secondary);margin-bottom:14px;text-transform:uppercase;letter-spacing:.04em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--color-text-secondary);font-weight:500}
+.field input,.field select{padding:7px 10px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary);transition: border-color 0.2s}
+.field input:focus,.field select:focus{outline:none;border-color:#007BFF;box-shadow: 0 0 0 2px rgba(0,123,255,0.2)}
+.items-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.items-table th{text-align:left;font-weight:600;font-size:11px;color:var(--color-text-secondary);padding:6px 8px;border-bottom:1px solid var(--color-border-tertiary);text-transform:uppercase}
+.items-table td{padding:6px 8px;border-bottom:1px solid var(--color-border-tertiary);vertical-align:middle}
+.items-table td input{width:100%;padding:5px 7px;border:1px solid transparent;border-radius:6px;font-size:13px;font-family:var(--font-sans);background:transparent;color:var(--color-text-primary);transition: border-color 0.2s}
+.items-table td input:focus{border-color:#007BFF;background:var(--color-background-secondary);outline:none}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:16px;padding:2px 6px;border-radius:4px;transition: all 0.2s}
+.remove-btn:hover{color:#DC3545;background:#F8D7DA}
+.add-row-btn{margin-top:10px;padding:7px 14px;border:1px dashed var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:13px;color:var(--color-text-secondary);font-family:var(--font-sans);width:100%;transition: all 0.2s}
+.add-row-btn:hover{background:var(--color-background-secondary);border-color:#007BFF;color:#007BFF}
+.totals{display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-top:16px}
+.total-row{display:flex;gap:20px;font-size:13px}
+.total-row span:first-child{color:var(--color-text-secondary);min-width:150px;text-align:right}
+.total-row span:last-child{font-weight:600;min-width:100px;text-align:right}
+.total-final{border-top:1px solid var(--color-border-tertiary);padding-top:8px;margin-top:4px;font-size:15px}
+.total-final span:last-child{color:#007BFF}
+.retencion-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--border-radius-md);font-size:12px;font-weight:500}
+.badge-yes{background:#D1ECF1;color:#0C5460}
+.badge-no{background:#F8F9FA;color:#6C757D}
+.checkbox-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:10px}
+.checkbox-row input[type=checkbox]{width:15px;height:15px;accent-color:#007BFF}
+.action-bar{display:flex;gap:10px;margin-top:16px}
+.btn-primary{padding:8px 18px;background:#007BFF;border:none;border-radius:var(--border-radius-md);color:#fff;cursor:pointer;font-size:13px;font-weight:600;font-family:var(--font-sans);transition: background 0.2s}
+.btn-primary:hover{background:#0056B3}
+.btn-secondary{padding:8px 18px;background:transparent;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);color:var(--color-text-primary);cursor:pointer;font-size:13px;font-family:var(--font-sans);transition: all 0.2s}
+.btn-secondary:hover{background:var(--color-background-secondary);border-color:#007BFF}
+.btn-danger{padding:8px 18px;background:transparent;border:1px solid #F5C6CB;border-radius:var(--border-radius-md);color:#721C24;cursor:pointer;font-size:13px;font-family:var(--font-sans);transition: all 0.2s}
+.btn-danger:hover{background:#F8D7DA}
+.inv-table{width:100%;border-collapse:collapse;font-size:13px}
+.inv-table th{text-align:left;font-weight:600;font-size:11px;color:var(--color-text-secondary);padding:8px 10px;border-bottom:1px solid var(--color-border-tertiary);text-transform:uppercase}
+.inv-table td{padding:8px 10px;border-bottom:1px solid var(--color-border-tertiary)}
+.inv-table tr:hover td{background:var(--color-background-secondary)}
+.cat-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.cat-tela{background:#E3F2FD;color:#1565C0}
+.cat-cremallera{background:#F3E5F5;color:#6A1B9A}
+.cat-boton{background:#E8F5E8;color:#2E7D32}
+.cat-otro{background:#F5F5F5;color:#424242}
+.empty{text-align:center;padding:30px;color:var(--color-text-secondary);font-size:13px}
+.cod-input-row{display:flex;gap:8px;align-items:flex-end}
+.cod-input-row .field{flex:0 0 160px}
+.cod-input-row button{padding:7px 14px;border:1px solid #007BFF;border-radius:var(--border-radius-md);background:#007BFF;color:#fff;cursor:pointer;font-size:13px;font-family:var(--font-sans);white-space:nowrap;transition: background 0.2s}
+.cod-input-row button:hover{background:#0056B3}
+.num-label{font-size:12px;color:var(--color-text-secondary)}
+.quote-num{font-size:22px;font-weight:600;color:#007BFF}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);padding:24px;width:480px;max-width:95vw;border:1px solid var(--color-border-tertiary);box-shadow: 0 4px 16px rgba(0,0,0,0.2)}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:16px}
+.modal .grid2{margin-bottom:12px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+@media print{
+.topbar .nav,.action-bar,.nav{display:none!important}
+.app{background:white}
+.print-area{padding:0}
+}
+</style>
+
+<div class="app" id="app">
+<div class="topbar">
+  <div class="logo-circle" id="logo-init">JE</div>
+  <div class="company-info">
+    <h1 id="comp-name">Jean Emporium S.A.S.</h1>
+    <p id="comp-sub">Insumos para jean · NIT: 900.123.456-7 · Tel: (605) 123-4567 · Barranquilla, Colombia</p>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showSection('cotizacion')">Cotización</button>
+    <button class="nav-btn" onclick="showSection('inventario')">Inventario</button>
+    <button class="nav-btn" onclick="showSection('config')">Mi empresa</button>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="section active" id="sec-cotizacion">
+  <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:16px">
+    <div style="flex:1">
+      <div class="num-label">Cotización N°</div>
+      <div class="quote-num" id="q-num">COT-001</div>
+    </div>
+    <div style="text-align:right">
+      <div class="num-label">Fecha</div>
+      <div style="font-size:14px;font-weight:500" id="q-date"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Datos del cliente</div>
+    <div class="grid3" style="margin-bottom:10px">
+      <div class="field" style="grid-column:span 2"><label>Razón social / Nombre</label><input id="cli-nombre" placeholder="Ej: Confecciones El Dorado Ltda."></div>
+      <div class="field"><label>NIT / Cédula</label><input id="cli-nit" placeholder="900.000.000-0"></div>
+    </div>
+    <div class="grid3">
+      <div class="field" style="grid-column:span 2"><label>Dirección</label><input id="cli-dir" placeholder="Calle 45 # 20-30, Itagüí"></div>
+      <div class="field"><label>Ciudad</label><input id="cli-ciudad" placeholder="Medellín"></div>
+    </div>
+    <div class="grid2" style="margin-top:10px">
+      <div class="field"><label>Teléfono</label><input id="cli-tel" placeholder="(604) 000-0000"></div>
+      <div class="field"><label>Correo electrónico</label><input id="cli-email" placeholder="compras@empresa.com"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Productos</div>
+    <div class="cod-input-row" style="margin-bottom:14px">
+      <div class="field"><label>Buscar por código</label><input id="cod-search" placeholder="Ej: TEL-001" onkeydown="if(event.key==='Enter')addByCod()"></div>
+      <button onclick="addByCod()">+ Agregar</button>
+    </div>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th style="width:90px">Código</th>
+          <th>Descripción</th>
+          <th style="width:70px">Cant.</th>
+          <th style="width:100px">P. unitario</th>
+          <th style="width:110px">Subtotal</th>
+          <th style="width:36px"></th>
+        </tr>
+      </thead>
+      <tbody id="items-body">
+        <tr id="empty-row"><td colspan="6" class="empty">Ingresa un código de producto o agrega manualmente</td></tr>
+      </tbody>
+    </table>
+    <button class="add-row-btn" onclick="addBlankRow()">+ Agregar fila manualmente</button>
+
+    <div class="checkbox-row" style="margin-top:14px">
+      <input type="checkbox" id="chk-ret" onchange="recalc()">
+      <label for="chk-ret">Aplicar retención en la fuente (2.5% del subtotal)</label>
+      <span id="ret-badge" class="retencion-badge badge-no">No aplica</span>
+    </div>
+
+    <div class="totals">
+      <div class="total-row"><span>Subtotal:</span><span id="t-sub">$ 0</span></div>
+      <div class="total-row" id="row-iva" style="display:none"><span>IVA (19%):</span><span id="t-iva">$ 0</span></div>
+      <div class="total-row" id="row-ret" style="display:none"><span>(-) Retención (2.5%):</span><span id="t-ret" style="color:#A32D2D">$ 0</span></div>
+      <div class="total-row total-final"><span style="font-weight:500">Total a pagar:</span><span id="t-total">$ 0</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Observaciones</div>
+    <textarea id="obs" style="width:100%;min-height:70px;padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary);resize:vertical" placeholder="Condiciones de pago, validez de la oferta, notas adicionales..."></textarea>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-primary" onclick="printQuote()">Imprimir / Guardar PDF</button>
+    <button class="btn-secondary" onclick="clearQuote()">Nueva cotización</button>
+  </div>
+</div>
+
+<div class="section" id="sec-inventario">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div>
+      <div style="font-size:16px;font-weight:500">Inventario de productos</div>
+      <div style="font-size:12px;color:var(--color-text-secondary)" id="inv-count"></div>
+    </div>
+    <button class="btn-primary" onclick="openAddModal()">+ Nuevo producto</button>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>P. unitario</th>
+          <th>Stock</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="inv-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section" id="sec-config">
+  <div class="card">
+    <div class="card-title">Datos de mi empresa</div>
+    <div class="grid2" style="margin-bottom:12px">
+      <div class="field" style="grid-column:span 2"><label>Nombre / Razón social</label><input id="cfg-nombre" placeholder="Jean Emporium S.A.S."></div>
+    </div>
+    <div class="grid3" style="margin-bottom:12px">
+      <div class="field"><label>NIT</label><input id="cfg-nit" placeholder="900.123.456-7"></div>
+      <div class="field"><label>Teléfono</label><input id="cfg-tel" placeholder="(605) 123-4567"></div>
+      <div class="field"><label>Ciudad</label><input id="cfg-ciudad" placeholder="Barranquilla"></div>
+    </div>
+    <div class="grid2" style="margin-bottom:12px">
+      <div class="field"><label>Dirección</label><input id="cfg-dir" placeholder="Cra 45 # 60-20, Barranquilla"></div>
+      <div class="field"><label>Correo electrónico</label><input id="cfg-email" placeholder="ventas@jeanemporium.com"></div>
+    </div>
+    <div class="field" style="margin-bottom:12px"><label>Página web / Redes sociales</label><input id="cfg-web" placeholder="www.jeanemporium.com | @jeanemporium"></div>
+    <div class="field"><label>Lema / Slogan (opcional)</label><input id="cfg-slogan" placeholder="Calidad en cada hilo"></div>
+    <div class="action-bar"><button class="btn-primary" onclick="saveConfig()">Guardar datos</button></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Configuración de cotización</div>
+    <div class="grid2">
+      <div class="field"><label>Prefijo de cotización</label><input id="cfg-prefix" placeholder="COT-" value="COT-"></div>
+      <div class="field"><label>Número siguiente</label><input id="cfg-nextnum" type="number" value="1" min="1"></div>
+    </div>
+    <div class="checkbox-row" style="margin-top:12px">
+      <input type="checkbox" id="cfg-iva" onchange="saveConfig()">
+      <label for="cfg-iva">Incluir IVA del 19% en las cotizaciones</label>
+    </div>
+    <div class="action-bar"><button class="btn-primary" onclick="saveConfig()">Guardar</button></div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="modal-bg" id="add-modal">
+<div class="modal">
+  <h3 id="modal-title">Nuevo producto</h3>
+  <div class="grid2">
+    <div class="field"><label>Código</label><input id="m-cod" placeholder="TEL-001"></div>
+    <div class="field"><label>Categoría</label>
+      <select id="m-cat">
+        <option value="tela">Tela índigo</option>
+        <option value="cremallera">Cremallera</option>
+        <option value="boton">Botón</option>
+        <option value="otro">Otro insumo</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:10px">
+    <div class="field" style="grid-column:span 2"><label>Descripción</label><input id="m-desc" placeholder="Tela índigo 10oz 58 pulgadas color azul claro"></div>
+  </div>
+  <div class="grid2" style="margin-top:10px">
+    <div class="field"><label>Precio unitario (COP)</label><input id="m-precio" type="number" placeholder="25000" min="0"></div>
+    <div class="field"><label>Unidad de medida</label><input id="m-unidad" placeholder="metro, unidad, rollo..."></div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>Stock disponible</label><input id="m-stock" type="number" placeholder="0" min="0"></div>
+  <div class="modal-actions">
+    <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+    <button class="btn-primary" onclick="saveProduct()">Guardar producto</button>
+  </div>
+</div>
+</div>
+
+<script>
+let inventory = [
+  {cod:'TEL-001',desc:'Tela índigo 10oz 58" color azul oscuro',cat:'tela',precio:28000,unidad:'metro',stock:500},
+  {cod:'TEL-002',desc:'Tela índigo 12oz 60" color negro carbón',cat:'tela',precio:32000,unidad:'metro',stock:300},
+  {cod:'CRE-001',desc:'Cremallera YKK 14cm color dorado',cat:'cremallera',precio:1800,unidad:'unidad',stock:2000},
+  {cod:'CRE-002',desc:'Cremallera invisible 20cm color negro',cat:'cremallera',precio:1500,unidad:'unidad',stock:1500},
+  {cod:'BOT-001',desc:'Botón metálico 17mm color bronce',cat:'boton',precio:350,unidad:'unidad',stock:5000},
+  {cod:'BOT-002',desc:'Botón resina 15mm color nácar',cat:'boton',precio:280,unidad:'unidad',stock:4000},
+];
+
+let company = {
+  nombre:'Jean Emporium S.A.S.',nit:'900.123.456-7',tel:'(605) 123-4567',
+  ciudad:'Barranquilla',dir:'Cra 45 # 60-20, Barranquilla, Colombia',
+  email:'ventas@jeanemporium.com',web:'www.jeanemporium.com',slogan:'',
+  prefix:'COT-',nextnum:1,iva:false
+};
+
+let editIdx = null;
+
+function fmt(n){return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n)}
+
+function setDate(){
+  const d=new Date();
+  document.getElementById('q-date').textContent=d.toLocaleDateString('es-CO',{day:'2-digit',month:'long',year:'numeric'});
+}
+
+function setQuoteNum(){
+  document.getElementById('q-num').textContent=company.prefix+String(company.nextnum).padStart(3,'0');
+}
+
+function showSection(s){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  document.getElementById('sec-'+s).classList.add('active');
+  event.target.classList.add('active');
+  if(s==='inventario') renderInv();
+  if(s==='config') loadConfig();
+}
+
+function addByCod(){
+  const cod=document.getElementById('cod-search').value.trim().toUpperCase();
+  if(!cod) return;
+  const prod=inventory.find(p=>p.cod.toUpperCase()===cod);
+  if(!prod){alert('Código "'+cod+'" no encontrado en inventario.\nVerifica o agrégalo en el módulo de Inventario.');return;}
+  addRow(prod.cod,prod.desc,1,prod.precio);
+  document.getElementById('cod-search').value='';
+  recalc();
+}
+
+function addBlankRow(){addRow('','',1,0);recalc()}
+
+let rowId=0;
+function addRow(cod,desc,qty,price){
+  const tb=document.getElementById('items-body');
+  const er=document.getElementById('empty-row');
+  if(er)er.remove();
+  const id='r'+rowId++;
+  const tr=document.createElement('tr');
+  tr.id=id;
+  tr.innerHTML=`
+    <td><input value="${cod}" style="width:80px" onchange="recalc()"></td>
+    <td><input value="${desc}" onchange="recalc()"></td>
+    <td><input type="number" value="${qty}" min="1" style="width:55px" onchange="recalc()"></td>
+    <td><input type="number" value="${price}" min="0" style="width:90px" onchange="recalc()"></td>
+    <td style="font-weight:500;color:#0F6E56" id="sub-${id}">${fmt(qty*price)}</td>
+    <td><button class="remove-btn" onclick="removeRow('${id}')">×</button></td>`;
+  tb.appendChild(tr);
+  recalc();
+}
+
+function removeRow(id){
+  document.getElementById(id).remove();
+  const tb=document.getElementById('items-body');
+  if(tb.children.length===0){
+    tb.innerHTML='<tr id="empty-row"><td colspan="6" class="empty">Ingresa un código de producto o agrega manualmente</td></tr>';
+  }
+  recalc();
+}
+
+function recalc(){
+  let sub=0;
+  document.querySelectorAll('#items-body tr[id^="r"]').forEach(tr=>{
+    const inputs=tr.querySelectorAll('input');
+    const qty=parseFloat(inputs[2].value)||0;
+    const p=parseFloat(inputs[3].value)||0;
+    const s=qty*p;
+    const sid=tr.id;
+    const el=document.getElementById('sub-'+sid);
+    if(el) el.textContent=fmt(s);
+    sub+=s;
+  });
+  const useIva=company.iva;
+  const iva=useIva?sub*0.19:0;
+  const applyRet=document.getElementById('chk-ret').checked;
+  const ret=applyRet?sub*0.025:0;
+  const total=sub+iva-ret;
+  document.getElementById('t-sub').textContent=fmt(sub);
+  document.getElementById('t-iva').textContent=fmt(iva);
+  document.getElementById('t-ret').textContent='- '+fmt(ret);
+  document.getElementById('t-total').textContent=fmt(total);
+  document.getElementById('row-iva').style.display=useIva?'flex':'none';
+  document.getElementById('row-ret').style.display=applyRet?'flex':'none';
+  const badge=document.getElementById('ret-badge');
+  if(applyRet){badge.className='retencion-badge badge-yes';badge.textContent='Aplica: '+fmt(ret);}
+  else{badge.className='retencion-badge badge-no';badge.textContent='No aplica';}
+}
+
+function clearQuote(){
+  if(!confirm('¿Crear una nueva cotización? Se perderán los datos actuales.')) return;
+  document.getElementById('items-body').innerHTML='<tr id="empty-row"><td colspan="6" class="empty">Ingresa un código de producto o agrega manualmente</td></tr>';
+  ['cli-nombre','cli-nit','cli-dir','cli-ciudad','cli-tel','cli-email','obs','cod-search'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('chk-ret').checked=false;
+  company.nextnum++;
+  setQuoteNum();
+  recalc();
+}
+
+function printQuote(){
+  const q=document.getElementById('q-num').textContent;
+  const d=document.getElementById('q-date').textContent;
+  const c={
+    nombre:document.getElementById('cli-nombre').value||'—',
+    nit:document.getElementById('cli-nit').value||'—',
+    dir:document.getElementById('cli-dir').value||'—',
+    ciudad:document.getElementById('cli-ciudad').value||'—',
+    tel:document.getElementById('cli-tel').value||'—',
+    email:document.getElementById('cli-email').value||'—'
+  };
+  let rows='';
+  document.querySelectorAll('#items-body tr[id^="r"]').forEach(tr=>{
+    const i=tr.querySelectorAll('input');
+    const cod=i[0].value,desc=i[1].value,qty=parseFloat(i[2].value)||0,p=parseFloat(i[3].value)||0;
+    rows+=`<tr><td>${cod}</td><td>${desc}</td><td style="text-align:center">${qty}</td><td style="text-align:right">${fmt(p)}</td><td style="text-align:right">${fmt(qty*p)}</td></tr>`;
+  });
+  const sub=parseFloat(document.getElementById('t-sub').textContent.replace(/[^0-9]/g,''))||0;
+  const applyRet=document.getElementById('chk-ret').checked;
+  const ret=applyRet?sub*0.025:0;
+  const useIva=company.iva;
+  const iva=useIva?sub*0.19:0;
+  const total=sub+iva-ret;
+  const obs=document.getElementById('obs').value;
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${q}</title>
+  <style>
+    body{font-family:Arial,sans-serif;font-size:12px;color:#222;margin:0;padding:0}
+    .page{max-width:780px;margin:0 auto;padding:24px 28px}
+    .header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #1D9E75}
+    .logo-block{display:flex;align-items:center;gap:12px}
+    .logo-circle{width:48px;height:48px;border-radius:50%;background:#1D9E75;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+    .comp-name{font-size:18px;font-weight:700;color:#0F6E56}
+    .comp-sub{font-size:10px;color:#555;margin-top:3px}
+    .q-block{text-align:right}
+    .q-num{font-size:20px;font-weight:700;color:#0F6E56}
+    .q-date{font-size:11px;color:#777;margin-top:2px}
+    .section-title{font-size:10px;font-weight:700;color:#1D9E75;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px;border-bottom:0.5px solid #e0e0e0;padding-bottom:4px}
+    .cli-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 14px;font-size:11px}
+    .cli-item label{color:#888;display:block}
+    .cli-item span{color:#222;font-weight:500}
+    table{width:100%;border-collapse:collapse;font-size:11px}
+    th{background:#f5f5f2;text-align:left;padding:6px 8px;font-weight:700;font-size:10px;text-transform:uppercase;color:#555;border-bottom:1px solid #ddd}
+    td{padding:6px 8px;border-bottom:0.5px solid #eee}
+    .totals{float:right;margin-top:10px;min-width:240px}
+    .tot-row{display:flex;justify-content:space-between;gap:30px;font-size:11px;padding:3px 0}
+    .tot-row.final{border-top:1.5px solid #1D9E75;margin-top:4px;padding-top:6px;font-size:14px;font-weight:700;color:#0F6E56}
+    .footer{margin-top:36px;padding-top:12px;border-top:0.5px solid #ccc;text-align:center;font-size:10px;color:#888}
+    .obs-box{background:#fafaf8;border:0.5px solid #ddd;border-radius:6px;padding:8px 12px;font-size:11px;color:#444;margin-top:6px}
+    @media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+  </style></head><body><div class="page">
+  <div class="header">
+    <div class="logo-block">
+      <div class="logo-circle">${company.nombre.substring(0,2).toUpperCase()}</div>
+      <div><div class="comp-name">${company.nombre}</div>
+      <div class="comp-sub">NIT: ${company.nit} &nbsp;|&nbsp; ${company.tel} &nbsp;|&nbsp; ${company.email}<br>${company.dir}${company.web?' &nbsp;|&nbsp; '+company.web:''}</div></div>
+    </div>
+    <div class="q-block"><div class="q-num">${q}</div><div class="q-date">Fecha: ${d}</div></div>
+  </div>
+  <div class="section-title">Cliente</div>
+  <div class="cli-grid">
+    <div class="cli-item" style="grid-column:span 2"><label>Razón social / Nombre</label><span>${c.nombre}</span></div>
+    <div class="cli-item"><label>NIT / Cédula</label><span>${c.nit}</span></div>
+    <div class="cli-item" style="grid-column:span 2"><label>Dirección</label><span>${c.dir}, ${c.ciudad}</span></div>
+    <div class="cli-item"><label>Teléfono</label><span>${c.tel}</span></div>
+    <div class="cli-item"><label>Correo</label><span>${c.email}</span></div>
+  </div>
+  <div class="section-title">Detalle de productos</div>
+  <table><thead><tr><th>Código</th><th>Descripción</th><th style="text-align:center">Cant.</th><th style="text-align:right">P. Unitario</th><th style="text-align:right">Subtotal</th></tr></thead>
+  <tbody>${rows||'<tr><td colspan="5" style="text-align:center;color:#aaa;padding:12px">Sin productos</td></tr>'}</tbody></table>
+  <div class="totals">
+    <div class="tot-row"><span>Subtotal:</span><span>${fmt(sub)}</span></div>
+    ${useIva?`<div class="tot-row"><span>IVA (19%):</span><span>${fmt(iva)}</span></div>`:''}
+    ${applyRet?`<div class="tot-row" style="color:#c0392b"><span>(-) Retención (2.5%):</span><span>- ${fmt(ret)}</span></div>`:''}
+    <div class="tot-row final"><span>Total a pagar:</span><span>${fmt(total)}</span></div>
+  </div>
+  <div style="clear:both"></div>
+  ${obs?`<div class="section-title">Observaciones</div><div class="obs-box">${obs}</div>`:''}
+  <div class="footer">${company.nombre} &nbsp;·&nbsp; NIT: ${company.nit} &nbsp;·&nbsp; ${company.tel} &nbsp;·&nbsp; ${company.email}<br>${company.dir}${company.web?' &nbsp;·&nbsp; '+company.web:''}<br>Cotización válida por 30 días a partir de la fecha de emisión.</div>
+  </div></body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),400);
+}
+
+function renderInv(){
+  const tb=document.getElementById('inv-body');
+  tb.innerHTML='';
+  if(inventory.length===0){tb.innerHTML='<tr><td colspan="6" class="empty" style="padding:24px">No hay productos. Agrega tu primer producto con el botón "Nuevo producto".</td></tr>';return;}
+  const cats={tela:'cat-tela',cremallera:'cat-cremallera',boton:'cat-boton',otro:'cat-otro'};
+  const catLabel={tela:'Tela índigo',cremallera:'Cremallera',boton:'Botón',otro:'Otro'};
+  inventory.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:500;font-family:var(--font-mono,monospace);font-size:12px">${p.cod}</td>
+    <td>${p.desc}</td>
+    <td><span class="cat-badge ${cats[p.cat]||'cat-otro'}">${catLabel[p.cat]||p.cat}</span></td>
+    <td style="text-align:right;font-weight:500">${fmt(p.precio)}<span style="font-size:10px;color:var(--color-text-secondary)"> /${p.unidad}</span></td>
+    <td style="text-align:center">${p.stock}</td>
+    <td><button class="btn-secondary" style="padding:4px 10px;font-size:11px" onclick="editProduct(${i})">Editar</button></td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById('inv-count').textContent=inventory.length+' productos registrados';
+}
+
+function openAddModal(){
+  editIdx=null;
+  document.getElementById('modal-title').textContent='Nuevo producto';
+  ['m-cod','m-desc','m-precio','m-unidad','m-stock'].forEach(id=>{document.getElementById(id).value=''});
+  document.getElementById('m-cat').value='tela';
+  document.getElementById('add-modal').classList.add('open');
+}
+
+function editProduct(i){
+  editIdx=i;
+  const p=inventory[i];
+  document.getElementById('modal-title').textContent='Editar producto';
+  document.getElementById('m-cod').value=p.cod;
+  document.getElementById('m-desc').value=p.desc;
+  document.getElementById('m-cat').value=p.cat;
+  document.getElementById('m-precio').value=p.precio;
+  document.getElementById('m-unidad').value=p.unidad;
+  document.getElementById('m-stock').value=p.stock;
+  document.getElementById('add-modal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('add-modal').classList.remove('open')}
+
+function saveProduct(){
+  const cod=document.getElementById('m-cod').value.trim().toUpperCase();
+  const desc=document.getElementById('m-desc').value.trim();
+  if(!cod||!desc){alert('Código y descripción son obligatorios.');return;}
+  const p={
+    cod,desc,
+    cat:document.getElementById('m-cat').value,
+    precio:parseFloat(document.getElementById('m-precio').value)||0,
+    unidad:document.getElementById('m-unidad').value.trim()||'unidad',
+    stock:parseInt(document.getElementById('m-stock').value)||0
+  };
+  if(editIdx!==null)inventory[editIdx]=p;
+  else{
+    if(inventory.find(x=>x.cod===cod&&editIdx===null)){alert('Ya existe un producto con ese código.');return;}
+    inventory.push(p);
+  }
+  closeModal();
+  renderInv();
+}
+
+function loadConfig(){
+  document.getElementById('cfg-nombre').value=company.nombre;
+  document.getElementById('cfg-nit').value=company.nit;
+  document.getElementById('cfg-tel').value=company.tel;
+  document.getElementById('cfg-ciudad').value=company.ciudad;
+  document.getElementById('cfg-dir').value=company.dir;
+  document.getElementById('cfg-email').value=company.email;
+  document.getElementById('cfg-web').value=company.web;
+  document.getElementById('cfg-slogan').value=company.slogan||'';
+  document.getElementById('cfg-prefix').value=company.prefix;
+  document.getElementById('cfg-nextnum').value=company.nextnum;
+  document.getElementById('cfg-iva').checked=company.iva;
+}
+
+function saveConfig(){
+  company.nombre=document.getElementById('cfg-nombre').value||company.nombre;
+  company.nit=document.getElementById('cfg-nit').value||company.nit;
+  company.tel=document.getElementById('cfg-tel').value||company.tel;
+  company.ciudad=document.getElementById('cfg-ciudad').value||company.ciudad;
+  company.dir=document.getElementById('cfg-dir').value||company.dir;
+  company.email=document.getElementById('cfg-email').value||company.email;
+  company.web=document.getElementById('cfg-web').value||'';
+  company.slogan=document.getElementById('cfg-slogan').value||'';
+  company.prefix=document.getElementById('cfg-prefix').value||'COT-';
+  company.nextnum=parseInt(document.getElementById('cfg-nextnum').value)||1;
+  company.iva=document.getElementById('cfg-iva').checked;
+  document.getElementById('comp-name').textContent=company.nombre;
+  document.getElementById('comp-sub').textContent=`Insumos para jean · NIT: ${company.nit} · Tel: ${company.tel} · ${company.ciudad}, Colombia`;
+  const init=company.nombre.substring(0,2).toUpperCase();
+  document.getElementById('logo-init').textContent=init;
+  setQuoteNum();
+  alert('Datos guardados correctamente.');
+}
+
+setDate();
+setQuoteNum();
+renderInv();
+</script>
